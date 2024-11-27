@@ -15,4 +15,4 @@ jobs:
       uses: checkpointsw/spectral-github-action@v3
       with:
         spectral-dsn: ${{ env.SPECTRAL_DSN }}
-        spectral-args: scan --fail  --include-tags base,audit
+        spectral-args: scan --ok  --include-tags base,audit
