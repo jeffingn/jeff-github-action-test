@@ -13,12 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2  # Ensures at least the last commit is available
 
       - name: Get commit diff
-        run: git diff ${{ github.event.before }} ${{ github.sha }} > spectral_diff.patch
+        run: git diff HEAD^ HEAD > spectral_diff.patch  # Compare last commit with previous one
 
       - name: Install and run Spectral CI
         uses: checkpointsw/spectral-github-action@v3
         with:
           spectral-dsn: ${{ env.SPECTRAL_DSN }}
           spectral-args: scan --fail-on-error --validate --engines secrets,iac,oss --include-tags base,audit3,iac spectral_diff.patch
+
